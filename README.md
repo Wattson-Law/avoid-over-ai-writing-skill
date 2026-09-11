@@ -1,93 +1,124 @@
 <div align="center">
 
-<img src="assets/logo.svg" alt="Avoid Over AI Writing" width="96" height="96" />
+<img src="assets/logo.svg" alt="Avoid Over AI Writing" width="110" height="110" />
 
 # 避免过度 AI 写作
 
-AI 榨汁机，去除模板化，生成可直接交付、**规范排版的正式文稿**。<br/>
-*The AI Juicer: turn formulaic drafts into well-formatted documents ready to hand over.*
+### AI 榨汁机，去除模板化，生成可直接交付、**规范排版的正式文稿**
 
-[![MIT License](https://img.shields.io/badge/License-MIT-111827.svg)](LICENSE)
-[![Codex Skill](https://img.shields.io/badge/Codex-Skill-2563eb.svg)](SKILL.md)
-[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
+<em>The AI Juicer: turn formulaic drafts into well-formatted documents ready to hand over.</em>
+
+<br />
+
+[![License](https://img.shields.io/github/license/Wattson-Law/avoid-over-ai-writing-skill?style=flat-square&color=111827)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![Codex / Claude Code Skill](https://img.shields.io/badge/Codex%20%2F%20Claude%20Code-Skill-2563eb?style=flat-square)](SKILL.md)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-16a34a?style=flat-square)](#community)
+[![GitHub Stars](https://img.shields.io/github/stars/Wattson-Law/avoid-over-ai-writing-skill?style=flat-square&label=stars)](https://github.com/Wattson-Law/avoid-over-ai-writing-skill/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/Wattson-Law/avoid-over-ai-writing-skill?style=flat-square&label=forks)](https://github.com/Wattson-Law/avoid-over-ai-writing-skill/network/members)
+[![Made with Logic & Care](https://img.shields.io/badge/Made%20with-Logic%20%26%20Care-0f172a?style=flat-square)](#)
+
+<br />
+
+<kbd><a href="#quickstart">🚀 快速上手</a></kbd> ·
+<kbd><a href="#effects">⚡ 核心效果</a></kbd> ·
+<kbd><a href="#compare">⚖️ 对比视界</a></kbd> ·
+<kbd><a href="#pipeline">🔄 处理流水线</a></kbd> ·
+<kbd><a href="#roadmap">🗺️ 路线图</a></kbd>
 
 </div>
 
-## 项目定位
+<a id="positioning"></a>
+
+## 📌 项目定位
 
 还在每天下班前花半小时给 AI 生成的烂摊子擦屁股？别再当它的“人工后处理流水线工人”了。挂上这个 Skill，给 AI 套上紧箍咒，按头交出能直接甩给老板的正式 Word。
 
 这是一个可复用的 Codex skill，用于处理论文、技术方案、专利披露和正式 Word 文稿。它把已经确定的事实、数字和结论组织成更克制的表达，并将 Markdown、Word 或粘贴文本整理为可交付的 DOCX。
 
-它解决的是正式文稿的最后一公里：模型输出常带有模板化套话、叠加不确定性和宣传化修辞，Word 文档又容易出现标题编号、字体、表格、分页和目录问题。
+> [!IMPORTANT]
+> **事实绝对守恒。** Skill 保留用户已经确认的事实、数字、结论和责任边界，专注于表达、结构呈现和格式交付。
 
-> 使用时请提供已经确认的事实与判断；本项目负责表达、结构呈现和格式交付。
+<a id="effects"></a>
 
-## 适用文种
+## ⚡ 核心效果
 
-- 学术论文、开题报告和文献综述初稿
-- 技术实施方案、架构设计书和投标技术说明
-- 发明专利技术披露书
-- 需要统一格式的正式 Word 汇报材料
+> [!CAUTION]
+> ### AI 味重灾区
+> “随着……飞速发展”“全面赋能”“毫无疑问”“不仅如此”“构建新范式”——这些词让正式文稿变长，却没有增加证据和可执行信息。
 
-## 核心能力
+> [!TIP]
+> ### 脱水处方
+> 把主张、依据、方法和结果分开写；收紧叠加的不确定性；去掉无边界的宣传修辞；统一标题、表格、分页和目录。输入信息越完整，交付稿越稳定。
 
-- 保留数字、单位、结论、责任主体和业务边界，降低模板化 AI 文风
-- 按论文、方案、专利等文种组织信息，减少叠甲和无边界宣传语
-- 统一标题层级和编号，例如将 `第六章 建设路线` 规范为 `六、建设路线`
-- 统一中文与英文字体、段落、首行缩进、分页和页眉页脚
-- 将 Markdown 表格转换为白底黑字、可编辑的 Word 表格，并自动添加表题
-- 为决策方案生成三级自动目录，更新字段和页码
-- 提供内容守恒审计、结构检查、格式验收和逐页渲染脚本
+<table>
+<tr>
+<td width="50%" valign="top">
 
-## 研究与证据来源
+**🔴 原始 AI 草稿 · 油腻含水**
 
-文风规则不是由某一次模型输出决定的。仓库把规则来源和评测过程分开记录：
+> 在当今飞速发展的分布式体系中，该模块毫无疑问是全面赋能系统效能的关键抓手，能够彻底解决高并发瓶颈。
 
-1. **写作规范**：参考 GB/T 7713.2-2022、GB/T 7714-2015，以及 APA、MLA、Chicago 等公开写作与引文规范，用于约束论文结构、引文呈现、清晰度和可读性。
-2. **真实文本样本**：优先使用带作者、证据或人工摘要的公开语料，例如 `allenai/qasper`、`NortheasternUniversity/big_patent` 和 `princeton-nlp/SWE-bench_Verified`。这些材料只用于提取结构和评估维度，不直接复制答案。
-3. **多模型交叉检查**：Gemini 参与统一提示词和多轮样本评测，帮助识别叠甲、泛化和宣传化表达；盲评结果会被整理为可复用的文风矫正提示词，再通过内容守恒检查复核。
+</td>
+<td width="50%" valign="top">
 
-当前评测记录、样本要求和稳定性门槛见 [evaluation.md](references/evaluation.md) 与 [provider-adapters.md](references/provider-adapters.md)。这套方法说明了规则从哪里来，也限定了它能支持到什么程度：它提高表达和交付的一致性，不把模型偏好包装成永久人格，也不替作者核验事实。
+**🟢 脱水交付稿 · 严肃合规**
 
-### 当前评测规模
+> 系统在高并发场景下采用 Redis 集群提供缓存服务。基准测试结果显示，读写吞吐量为 <u>50,000 QPS</u>，响应延迟稳定在 <u>3ms</u> 以内。
 
-每种文种使用 3 个来源案例，每个案例进行 2 次新运行，并由两名盲评者交叉检查。Gemini 参与了学术论文样本的 6 次评测，用于提炼证据收敛、语气收紧和句式改写提示词。这些记录对应具体模型版本和产品入口，便于后续复现和迭代。
+</td>
+</tr>
+</table>
 
-## 工作流程
+<sub>示例中的技术栈和指标属于输入样例，用于展示表达改写方式，不代表本项目自身的性能测试。</sub>
+
+<a id="compare"></a>
+
+## ⚖️ 对比视界
+
+| 维度 | 处理前 | 处理后 |
+| --- | --- | --- |
+| 语气 | 叠甲、摇摆、宏大叙事 | 对象、动作、条件和结果清楚 |
+| 内容 | 套话掩盖核心信息 | 保留事实、数字、结论和责任边界 |
+| 结构 | 标题编号混乱，段落层级不稳定 | 统一标题层级、表格、分页和目录 |
+| 交付 | 需要人工反复整理 Word | 输出结构清晰、格式统一的 DOCX |
+
+<a id="pipeline"></a>
+
+## 🔄 处理流水线
 
 ```mermaid
 flowchart LR
     A[Markdown / DOCX / 粘贴文本] --> B[解析结构]
     B --> C[锁定事实与结论]
-    C --> D[保留式表达改写]
-    D --> E[标题、表格与页面规范化]
-    E --> F[目录、内容与格式验收]
-    F --> G[可交付 DOCX]
+    C --> D[文风脱水]
+    D --> E[结构与编号对齐]
+    E --> F[Word 页面规范化]
+    F --> G[目录、内容与格式验收]
+    G --> H[可直接交付的 DOCX]
+
+    style A fill:#f8fafc,stroke:#64748b,color:#0f172a
+    style B fill:#eff6ff,stroke:#2563eb,color:#0f172a
+    style C fill:#fefce8,stroke:#ca8a04,color:#0f172a
+    style D fill:#f0fdf4,stroke:#16a34a,color:#0f172a
+    style E fill:#f0fdf4,stroke:#16a34a,color:#0f172a
+    style F fill:#f5f3ff,stroke:#7c3aed,color:#0f172a
+    style G fill:#fff7ed,stroke:#ea580c,color:#0f172a
+    style H fill:#0f172a,stroke:#0f172a,color:#ffffff
 ```
 
-## Before / After
+<a id="quickstart"></a>
 
-**Before**
+## 🚀 快速上手
 
-> 在当今飞速发展的体系中，该模块毫无疑问是全面赋能系统效能的关键抓手。
-
-**After**
-
-> 系统在高并发场景下采用 Redis 集群提供缓存服务。基准测试结果显示，读写吞吐量为 50,000 QPS，响应延迟稳定在 3ms 以内。
-
-改写保留技术栈和指标，只收紧套话、主观修辞和不明确的因果表达。
-
-## 快速开始
-
-将仓库安装到 Codex 的 skill 目录后，在对话中调用 `$avoid-over-ai-writing`，并说明文种、读者、已确定的结论和期望格式。
+将仓库安装到 Codex 的 skill 目录，在对话中调用 `$avoid-over-ai-writing`，并说明文种、读者、已确定的结论和期望格式。
 
 ```powershell
 git clone https://github.com/Wattson-Law/avoid-over-ai-writing-skill.git
 Copy-Item -Recurse avoid-over-ai-writing-skill "$env:USERPROFILE\.codex\skills\avoid-over-ai-writing"
 ```
 
-也可以直接使用仓库中的转换脚本：
+也可以直接使用转换脚本：
 
 ```powershell
 $env:PYTHONUTF8 = '1'
@@ -100,7 +131,14 @@ python scripts/ensure_toc.py draft.docx --out draft-with-toc.docx
 .\scripts\update_word_fields.ps1 -InputDocx draft-with-toc.docx
 ```
 
-可选的验收命令：
+<details>
+<summary>🔧 展开：高级验收与处理选项</summary>
+
+### 处理模式
+
+支持 `requirements-list`、`decision-proposal`、`rd-application` 和 `rd-implementation-outline` 四种文档模式。默认采用 `editorial` 保留式改写，保留源文档的事实和语义单元。
+
+### 内容与格式验收
 
 ```powershell
 python scripts/audit_content_preservation.py source.docx output.docx `
@@ -112,21 +150,34 @@ python scripts/validate_standardized_docx.py output.docx `
   --report format-validation.json
 ```
 
-## 适合谁
+### 标题编号规范
 
-适合已经掌握核心事实、实验数据或技术结论，但需要把 AI 草稿整理成正式文稿的研究人员、工程师、专利撰写者和技术管理人员。
+标题默认采用单一编号体系，例如把 `第六章 建设路线` 转为 `六、建设路线`，避免 `第六、` 和 `六章、` 等混合形式。
+
+</details>
+
+<a id="scope"></a>
+
+## 🎯 适用范围
+
+- 学术论文、开题报告和文献综述初稿
+- 技术实施方案、架构设计书和投标技术说明
+- 发明专利技术披露书
+- 需要统一格式的正式 Word 汇报材料
 
 使用前先锁定事实、数据、结论和读者要求，便于 skill 将内容稳定转换为正式文稿。
 
-## 项目结构
+<a id="evidence"></a>
 
-- `SKILL.md`：路由、证据边界、文风适配和 Word 工作流
-- `references/`：文种结构、内容边界、模型适配和验收规则
-- `scripts/`：Markdown 转 DOCX、目录、内容审计、格式验收和渲染
-- `vendor/`：脚本运行所需的精简依赖
-- `examples/`：最小输入示例
+## 🔬 研究与证据来源
 
-## Roadmap
+文风规则参考 GB/T 7713.2-2022、GB/T 7714-2015，以及 APA、MLA、Chicago 等写作与引文规范；评测使用带作者、证据或人工摘要的公开语料，并由 Gemini 参与统一提示词和多轮样本评测，提炼叠甲、泛化和宣传化表达的矫正提示词。
+
+每种文种使用 3 个来源案例，每个案例进行 2 次新运行，并由两名盲评者交叉检查。完整来源说明见 [style-evidence.md](references/style-evidence.md)，评测协议见 [evaluation.md](references/evaluation.md)。
+
+<a id="roadmap"></a>
+
+## 🗺️ 路线图
 
 - [x] AI 模板化表达的保留式改写规则
 - [x] 多级标题规范化与目录生成
@@ -135,9 +186,23 @@ python scripts/validate_standardized_docx.py output.docx `
 - [ ] 专利交底书和权利要求书的专用语态适配
 - [ ] 无需进入对话界面的离线批量转换 CLI
 
-## 参与贡献
+<a id="community"></a>
 
-欢迎提交 Issue 和 Pull Request。新增规则时请同时提供原句、改写目标和不会改变的事实边界，并运行现有校验脚本。
+## 🌱 社区与互动
+
+欢迎提交 [Issue](https://github.com/Wattson-Law/avoid-over-ai-writing-skill/issues) 和 Pull Request。新增规则时请同时提供原句、改写目标和不会改变的事实边界。
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Wattson-Law/avoid-over-ai-writing-skill&type=Date)](https://star-history.com/#Wattson-Law/avoid-over-ai-writing-skill&Date)
+
+如果这个 Skill 帮你省下了反复整理 Word 的时间，欢迎点一个 Star，或在 Issue 中分享你的使用场景。
+
+## 📂 项目结构
+
+- `SKILL.md`：路由、证据边界、文风适配和 Word 工作流
+- `references/`：文种结构、内容边界、模型适配和验收规则
+- `scripts/`：Markdown 转 DOCX、目录、内容审计、格式验收和渲染
+- `vendor/`：脚本运行所需的精简依赖
+- `examples/`：最小输入示例
 
 ## License
 
