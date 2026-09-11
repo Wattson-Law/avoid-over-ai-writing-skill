@@ -2,7 +2,7 @@
 
 ## 适用范围
 
-适用于平台选型、技术方案、产品对比和建设建议类文档。参考资产为 `assets/decision-proposal-reference.docx`，输入/输出对照可使用 `assets/decision-proposal-source-example.docx`。
+适用于平台选型、技术方案、产品对比和建设建议类文档。版式参考只读取用户当前提供的文档，不从公开包引入业务样例。
 
 ## 逻辑结构
 
