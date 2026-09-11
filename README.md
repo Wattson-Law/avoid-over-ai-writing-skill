@@ -88,23 +88,41 @@
 ## 🔄 处理流水线
 
 ```mermaid
-flowchart LR
-    A[Markdown / DOCX / 粘贴文本] --> B[解析结构]
-    B --> C[锁定事实与结论]
-    C --> D[文风脱水]
-    D --> E[结构与编号对齐]
-    E --> F[Word 页面规范化]
-    F --> G[目录、内容与格式验收]
-    G --> H[可直接交付的 DOCX]
+flowchart TD
+    IN(["📥 原始输入<br><code>Markdown / DOCX / 粘贴文本</code>"])
 
-    style A fill:#f8fafc,stroke:#64748b,color:#0f172a
-    style B fill:#eff6ff,stroke:#2563eb,color:#0f172a
-    style C fill:#fefce8,stroke:#ca8a04,color:#0f172a
-    style D fill:#f0fdf4,stroke:#16a34a,color:#0f172a
-    style E fill:#f0fdf4,stroke:#16a34a,color:#0f172a
-    style F fill:#f5f3ff,stroke:#7c3aed,color:#0f172a
-    style G fill:#fff7ed,stroke:#ea580c,color:#0f172a
-    style H fill:#0f172a,stroke:#0f172a,color:#ffffff
+    subgraph P1 ["阶段一 · 内容脱水与实体锁定"]
+        direction TB
+        A1["🔍 结构解析与层级映射"]
+        A2["🔒 锁定事实、数据与核心结论"]
+        A3["✂️ 文风脱水（去除叠甲与假大空）"]
+        A1 --> A2 --> A3
+    end
+
+    subgraph P2 ["阶段二 · 工程排版与格式合规"]
+        direction TB
+        B1["📐 标题多级序号自动对齐"]
+        B2["📑 Word 页面规范化（字体/三线表/缩进）"]
+        B3["✅ 目录结构与内容守恒验收"]
+        B1 --> B2 --> B3
+    end
+
+    OUT(["📦 可直接交付的 DOCX<br><code>+ 变动审计报告</code>"])
+
+    IN ==> P1
+    P1 ==> P2
+    P2 ==> OUT
+
+    classDef inputStyle fill:#f8fafc,stroke:#94a3b8,stroke-width:2px,color:#0f172a,rx:8px,ry:8px;
+    classDef coreStyle fill:#ffffff,stroke:#3b82f6,stroke-width:1.5px,color:#1e293b,rx:6px,ry:6px;
+    classDef outStyle fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc,rx:8px,ry:8px;
+
+    class IN inputStyle;
+    class A1,A2,A3,B1,B2,B3 coreStyle;
+    class OUT outStyle;
+
+    style P1 fill:#f0f9ff,stroke:#bae6fd,stroke-width:1.5px,stroke-dasharray:4 4;
+    style P2 fill:#f8fafc,stroke:#e2e8f0,stroke-width:1.5px,stroke-dasharray:4 4;
 ```
 
 <a id="quickstart"></a>
