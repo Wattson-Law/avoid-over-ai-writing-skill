@@ -65,7 +65,7 @@ def body_outline(paragraph):
 
 
 class MarkdownWriter:
-    def __init__(self, mode, base_dir):
+    def __init__(self, mode, base_dir, normalize_chapter_wrappers=True):
         self.mode = mode
         self.rd = mode.startswith("rd-")
         self.size = 14 if self.rd else 16
@@ -78,6 +78,7 @@ class MarkdownWriter:
         self.bookmarks = {}
         self.heading_offset = 0
         self.heading_normalizations = []
+        self.normalize_chapter_wrappers = normalize_chapter_wrappers
         self.setup()
 
     def setup(self):
@@ -271,7 +272,7 @@ class MarkdownWriter:
                 heading_children = token["children"]
                 heading_text = plain(heading_children)
                 match = CHAPTER_WRAPPER_RE.match(heading_text)
-                if match:
+                if match and self.normalize_chapter_wrappers:
                     normalized = f"{match.group(1)}、{match.group(2)}"
                     heading_children = [{"type": "text", "text": normalized}]
                     self.heading_normalizations.append(
@@ -366,8 +367,8 @@ class MarkdownWriter:
         return {"headings": len(headings) - int(bool(take_title)), "title_extracted": bool(take_title), "tables": self.tables, "images": self.images, "links": self.links, "heading_normalizations": self.heading_normalizations, "ast": tokens}
 
 
-def convert(text, output, mode, base_dir, title_mode="auto"):
-    writer = MarkdownWriter(mode, base_dir)
+def convert(text, output, mode, base_dir, title_mode="auto", normalize_chapter_wrappers=True):
+    writer = MarkdownWriter(mode, base_dir, normalize_chapter_wrappers)
     report = writer.build(text, title_mode)
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -382,6 +383,11 @@ def main():
     parser.add_argument("--mode", choices=MODES, required=True)
     parser.add_argument("--base-dir", type=Path, help="Base for relative images; defaults to the input file's directory")
     parser.add_argument("--title-mode", choices=("auto", "first-h1", "none"), default="auto")
+    parser.add_argument(
+        "--preserve-chapter-wrapper",
+        action="store_true",
+        help="Keep source headings such as '第六章'; default removes the redundant wrapper.",
+    )
     parser.add_argument("--encoding", default="utf-8-sig")
     parser.add_argument("--report", type=Path)
     args = parser.parse_args()
@@ -390,7 +396,14 @@ def main():
         if path is not None and path.resolve() == args.out.resolve():
             raise ValueError("Output must not overwrite the Markdown input")
         text = sys.stdin.buffer.read().decode(args.encoding) if path is None else path.read_text(encoding=args.encoding)
-        report = convert(text, args.out, args.mode, args.base_dir or (path.parent if path else Path.cwd()), args.title_mode)
+        report = convert(
+            text,
+            args.out,
+            args.mode,
+            args.base_dir or (path.parent if path else Path.cwd()),
+            args.title_mode,
+            normalize_chapter_wrappers=not args.preserve_chapter_wrapper,
+        )
     except Exception as exc:
         report = {"ok": False, "error": f"{type(exc).__name__}: {exc}"}
     if args.report:
