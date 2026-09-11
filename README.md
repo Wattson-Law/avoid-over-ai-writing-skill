@@ -4,8 +4,8 @@
 
 # 避免过度 AI 写作
 
-**去除模板化 AI 文风，交付规范排版的正式文稿**<br/>
-*Strip away template AI mannerisms; deliver formatted, production-ready documents.*
+AI 榨汁机，去除模板化，生成可直接交付、**规范排版的正式文稿**。<br/>
+*The AI Juicer: turn formulaic drafts into well-formatted documents ready to hand over.*
 
 [![MIT License](https://img.shields.io/badge/License-MIT-111827.svg)](LICENSE)
 [![Codex Skill](https://img.shields.io/badge/Codex-Skill-2563eb.svg)](SKILL.md)
@@ -14,6 +14,8 @@
 </div>
 
 ## 项目定位
+
+还在每天下班前花半小时给 AI 生成的烂摊子擦屁股？别再当它的“人工后处理流水线工人”了。挂上这个 Skill，给 AI 套上紧箍咒，按头交出能直接甩给老板的正式 Word。
 
 这是一个可复用的 Codex skill，用于处理论文、技术方案、专利披露和正式 Word 文稿。它把已经确定的事实、数字和结论组织成更克制的表达，并将 Markdown、Word 或粘贴文本整理为可交付的 DOCX。
 
