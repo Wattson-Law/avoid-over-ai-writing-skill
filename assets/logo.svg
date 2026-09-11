@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="title desc">
+  <title id="title">Avoid Over AI Writing</title>
+  <desc id="desc">A document outline with aligned text lines</desc>
+  <rect width="200" height="200" rx="36" fill="#0f172a"/>
+  <rect x="42" y="32" width="116" height="136" rx="8" fill="none" stroke="#f8fafc" stroke-width="5"/>
+  <path d="M126 32 L158 64 L126 64 Z" fill="#334155" stroke="#f8fafc" stroke-width="5" stroke-linejoin="round"/>
+  <line x1="62" y1="80" x2="108" y2="80" stroke="#38bdf8" stroke-width="6" stroke-linecap="round"/>
+  <line x1="62" y1="102" x2="138" y2="102" stroke="#f8fafc" stroke-width="5" stroke-linecap="round"/>
+  <line x1="62" y1="122" x2="138" y2="122" stroke="#f8fafc" stroke-width="5" stroke-linecap="round"/>
+  <line x1="62" y1="142" x2="114" y2="142" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="128" cy="80" r="4" fill="#38bdf8"/>
+</svg>

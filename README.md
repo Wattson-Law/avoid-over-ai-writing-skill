@@ -1,37 +1,128 @@
+<div align="center">
+
+<img src="assets/logo.svg" alt="Avoid Over AI Writing" width="96" height="96" />
+
 # 避免过度 AI 写作
 
-一个可复用的 Codex skill，用来把模型生成的论文、技术方案、专利披露和正式 Word 文稿整理成更确定、可读、可交付的版本。
+**去除模板化 AI 文风，交付规范排版的正式文稿**<br/>
+*Strip away template AI mannerisms; deliver formatted, production-ready documents.*
 
-它解决两类经常同时出现的问题：
+[![MIT License](https://img.shields.io/badge/License-MIT-111827.svg)](LICENSE)
+[![Codex Skill](https://img.shields.io/badge/Codex-Skill-2563eb.svg)](SKILL.md)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
 
-- 模型喜欢叠加“可能、通常、需要进一步”等防御性表达，或用“全面、显著、行业领先”等没有证据的宣传词；
-- 正文内容基本可用，但标题层级、编号、字体、表格、分页和目录不适合直接交付。
+</div>
 
-skill 会先锁定用户的立场、受支持的事实和输出要求，再做保留式改写；随后可把 Word、Markdown 或粘贴文本转换为统一格式的 DOCX。它强调呈现方式，不能代替事实核验、同行评审、专利检索或技术验收。
+## 项目定位
 
-## 使用
+这是一个可复用的 Codex skill，用于处理论文、技术方案、专利披露和正式 Word 文稿。它把已经确定的事实、数字和结论组织成更克制的表达，并将 Markdown、Word 或粘贴文本整理为可交付的 DOCX。
 
-将本目录安装为 Codex skill 后，在请求中使用 `$avoid-over-ai-writing`，并说明文种、读者、已确定的结论以及期望格式。需要 Word 输出时，提供 `.docx`、`.md` 或直接粘贴 Markdown；skill 会另存新文件并运行内容守恒、格式和分页检查。
+它解决的是正式文稿的最后一公里：模型输出常带有模板化套话、叠加不确定性和宣传化修辞，Word 文档又容易出现标题编号、字体、表格、分页和目录问题。
 
-标题编号默认使用 `一、`、`二、`、`六、` 等单一形式。不会把同一编号包装成 `第六章`，也不会生成 `第六、` 或 `六章、` 这样的混合形式。
+> 本项目不核验事实，不替代同行评审、专利检索或技术验收。它保留用户已经提供的事实与判断，只处理表达、结构呈现和格式。
 
-Markdown 转换器默认会把 `第六章 标题` 规范为 `六、标题`；确需保留原称谓时，使用 `--preserve-chapter-wrapper`。
+## 适用文种
+
+- 学术论文、开题报告和文献综述初稿
+- 技术实施方案、架构设计书和投标技术说明
+- 发明专利技术披露书
+- 需要统一格式的正式 Word 汇报材料
+
+## 核心能力
+
+- 保留数字、单位、结论、责任主体和业务边界，降低模板化 AI 文风
+- 按论文、方案、专利等文种组织信息，减少叠甲和无边界宣传语
+- 统一标题层级和编号，例如将 `第六章 建设路线` 规范为 `六、建设路线`
+- 统一中文与英文字体、段落、首行缩进、分页和页眉页脚
+- 将 Markdown 表格转换为白底黑字、可编辑的 Word 表格，并自动添加表题
+- 为决策方案生成三级自动目录，更新字段和页码
+- 提供内容守恒审计、结构检查、格式验收和逐页渲染脚本
+
+## 工作流程
+
+```mermaid
+flowchart LR
+    A[Markdown / DOCX / 粘贴文本] --> B[解析结构]
+    B --> C[锁定事实与结论]
+    C --> D[保留式表达改写]
+    D --> E[标题、表格与页面规范化]
+    E --> F[目录、内容与格式验收]
+    F --> G[可交付 DOCX]
+```
+
+## Before / After
+
+**Before**
+
+> 在当今飞速发展的体系中，该模块毫无疑问是全面赋能系统效能的关键抓手。
+
+**After**
+
+> 系统在高并发场景下采用 Redis 集群提供缓存服务。基准测试结果显示，读写吞吐量为 50,000 QPS，响应延迟稳定在 3ms 以内。
+
+改写保留技术栈和指标，只收紧套话、主观修辞和不明确的因果表达。
+
+## 快速开始
+
+将仓库安装到 Codex 的 skill 目录后，在对话中调用 `$avoid-over-ai-writing`，并说明文种、读者、已确定的结论和期望格式。
+
+```powershell
+git clone https://github.com/Wattson-Law/avoid-over-ai-writing-skill.git
+Copy-Item -Recurse avoid-over-ai-writing-skill "$env:USERPROFILE\.codex\skills\avoid-over-ai-writing"
+```
+
+也可以直接使用仓库中的转换脚本：
+
+```powershell
+$env:PYTHONUTF8 = '1'
+python scripts/markdown_to_docx.py input.md `
+  --mode decision-proposal `
+  --out draft.docx `
+  --report convert.json
+
+python scripts/ensure_toc.py draft.docx --out draft-with-toc.docx
+.\scripts\update_word_fields.ps1 -InputDocx draft-with-toc.docx
+```
+
+可选的验收命令：
+
+```powershell
+python scripts/audit_content_preservation.py source.docx output.docx `
+  --report content-audit.json
+python scripts/validate_standardized_docx.py output.docx `
+  --mode decision-proposal `
+  --source source.docx `
+  --processing-strength editorial `
+  --report format-validation.json
+```
+
+## 适合谁
+
+适合已经掌握核心事实、实验数据或技术结论，但需要把 AI 草稿整理成正式文稿的研究人员、工程师、专利撰写者和技术管理人员。
+
+不适合用来凭空生成实验数据、补齐专利事实、规避学术审查或保证内容正确。事实核验和专业评审仍由作者负责。
 
 ## 项目结构
 
-- `SKILL.md`：路由、证据边界、文风适配和 Word 工作流。
-- `references/`：论文、方案、专利、模型适配器、格式与验收规则。
-- `scripts/`：Markdown→DOCX、目录、内容守恒和格式校验工具。
-- `vendor/`：转换脚本运行所需的精简 Python 依赖。
+- `SKILL.md`：路由、证据边界、文风适配和 Word 工作流
+- `references/`：文种结构、内容边界、模型适配和验收规则
+- `scripts/`：Markdown 转 DOCX、目录、内容审计、格式验收和渲染
+- `vendor/`：脚本运行所需的精简依赖
+- `examples/`：最小输入示例
 
-公开包不包含任何公司模板、业务样例或内部文档。
+## Roadmap
 
-## 本地校验
+- [x] AI 模板化表达的保留式改写规则
+- [x] 多级标题规范化与目录生成
+- [x] DOCX 表格、字体、分页和黑白版式验收
+- [ ] GB/T 7714 参考文献格式审计
+- [ ] 专利交底书和权利要求书的专用语态适配
+- [ ] 无需进入对话界面的离线批量转换 CLI
 
-```powershell
-$env:PYTHONUTF8='1'
-python C:\Users\asus\.codex\skills\.system\skill-creator\scripts\quick_validate.py .
-python scripts\test_markdown_input.py
-```
+## 参与贡献
 
-MIT License.
+欢迎提交 Issue 和 Pull Request。新增规则时请同时提供原句、改写目标和不会改变的事实边界，并运行现有校验脚本。
+
+## License
+
+MIT License，详见 [LICENSE](LICENSE)。
