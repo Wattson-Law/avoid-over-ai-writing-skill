@@ -1,0 +1,5 @@
+interface:
+  display_name: "技术文档格式与表达规范化"
+  short_description: "降低过度AI文风并统一Word、Markdown文稿格式"
+  default_prompt: "使用 $avoid-over-ai-writing 将这份 Word、Markdown 文件或粘贴文稿按默认 editorial 强度转换为规范化 Word，统一表达、结构与格式，按文档类型生成自动目录，保留全部业务内容并完成验收。"
+

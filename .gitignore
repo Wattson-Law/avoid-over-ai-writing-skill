@@ -1,0 +1,4 @@
+_qa/
+**/__pycache__/
+*.pyc
+*.docx
