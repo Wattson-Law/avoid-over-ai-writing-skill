@@ -37,7 +37,12 @@ function Set-TocPageLayout {
 
     $toc = $Document.TablesOfContents.Item(1)
     $tocSection = $toc.Range.Sections.Item(1)
-    $tocPage = $toc.Range.Information(3)
+    # Information(3) on the complete TOC range returns its active end page.
+    # A multi-page TOC is valid, so inspect a collapsed duplicate at the
+    # field's start when checking that it begins on the section's first page.
+    $tocStart = $toc.Range.Duplicate
+    $tocStart.Collapse(1)
+    $tocPage = $tocStart.Information(3)
     $sectionStart = $tocSection.Range.Duplicate
     $sectionStart.Collapse(1)
     $sectionStartPage = $sectionStart.Information(3)
