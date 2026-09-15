@@ -50,7 +50,7 @@ Word 的直接格式优先于样式。仅套用目标样式不足以保证视觉
      --report "$QA_DIR\format-validation.json"
    ```
 
-   `$MODE` 取 `requirements-list`、`decision-proposal`、`rd-application` 或 `rd-implementation-outline`。命令必须以零状态退出，报告不得包含失败项。不得忽略、降级或人工豁免失败项后交付。
+   `$MODE` 取 `requirements-list`、`decision-proposal`、`rd-application`、`rd-implementation-outline` 或 `patent`。命令必须以零状态退出，报告不得包含失败项。不得忽略、降级或人工豁免失败项后交付。
    只有用户在当前任务中明确要求保留彩色正文时，才可追加 `--allow-colored-text`。输入文件原有颜色不构成使用依据；该选项不豁免表格的白底黑字、黑色边框和黑色表头文字要求。
 3. 对要求目录的文档，确认更新后的目录不是静态文本，`TOC` 字段覆盖一级至三级标题，已经生成可见目录项，点状引导线和页码完整；目录首页无可见页眉页脚，目录所在节从 1 计页，单页目录后的正文第一页显示 2，多页目录则按实际页数接续；标题文字、标题层级或分页发生变化后必须重新更新字段。
 4. 将 DOCX 的每一页渲染为图像并逐页检查。页数以渲染结果为准，不得只检查包含表格的页面或随机抽样。

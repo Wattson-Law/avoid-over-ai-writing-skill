@@ -30,7 +30,7 @@ from docx.oxml.ns import qn
 from docx.opc.constants import RELATIONSHIP_TYPE as RT
 from docx.shared import Inches, Mm, Pt, RGBColor
 
-MODES = ("requirements-list", "decision-proposal", "rd-application", "rd-implementation-outline")
+MODES = ("requirements-list", "decision-proposal", "rd-application", "rd-implementation-outline", "patent")
 CHAPTER_WRAPPER_RE = re.compile(
     r"^\s*第([一二三四五六七八九十百千万零〇两0-9]+)章\s*(.+?)\s*$"
 )
@@ -67,7 +67,7 @@ def body_outline(paragraph):
 class MarkdownWriter:
     def __init__(self, mode, base_dir, normalize_chapter_wrappers=True):
         self.mode = mode
-        self.rd = mode.startswith("rd-")
+        self.rd = mode.startswith("rd-") or mode == "patent"
         self.size = 14 if self.rd else 16
         self.base_dir = Path(base_dir).resolve()
         self.doc = Document()
@@ -288,6 +288,12 @@ class MarkdownWriter:
                 p = self.paragraph("AOW Quote" if quote else None)
                 if quote:
                     p.paragraph_format.left_indent = Pt(24 * (depth + 1))
+                paragraph_text = plain(token["children"]).strip()
+                if self.mode == "patent" and re.match(
+                    r"^\d+[、.]\s*(?:一种|根据权利要求|如权利要求)", paragraph_text
+                ):
+                    p.paragraph_format.left_indent = Pt(28)
+                    p.paragraph_format.first_line_indent = Pt(-28)
                 self.inline(p, token["children"])
             elif kind == "block_quote":
                 self.blocks(token["children"], depth, quote=True)
@@ -298,6 +304,14 @@ class MarkdownWriter:
                     p = self.paragraph("AOW List")
                     p.paragraph_format.left_indent = Pt(24 * (depth + 1))
                     p.paragraph_format.first_line_indent = Pt(-12)
+                    claim_text = ""
+                    if children and children[0]["type"] in {"block_text", "paragraph"}:
+                        claim_text = plain(children[0]["children"]).strip()
+                    if self.mode == "patent" and token.get("ordered") and re.match(
+                        r"^(?:一种|根据权利要求|如权利要求)", claim_text
+                    ):
+                        p.paragraph_format.left_indent = Pt(28)
+                        p.paragraph_format.first_line_indent = Pt(-28)
                     if item["type"] == "task_list_item":
                         p.add_run("[x] " if item["checked"] else "[ ] ")
                     else:

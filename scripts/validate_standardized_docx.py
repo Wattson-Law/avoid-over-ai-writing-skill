@@ -63,7 +63,7 @@ TOC_PLACEHOLDER_RE = re.compile(
 WHITE_FILLS = {None, "", "auto", "FFFFFF", "ffffff"}
 TRUE_VALUES = {None, "", "1", "true", "on"}
 
-R_AND_D_MODES = {"rd-application", "rd-implementation-outline"}
+R_AND_D_MODES = {"rd-application", "rd-implementation-outline", "patent"}
 STRUCTURAL_TABLE_RE = re.compile(
     r"审核意见|审查意见|审批意见|签字|签名|签章|盖章|申报意见|协作单位意见"
 )
@@ -82,6 +82,7 @@ MODE_CHOICES = (
     "decision-proposal",
     "rd-application",
     "rd-implementation-outline",
+    "patent",
 )
 STRENGTH_CHOICES = ("format-only", "editorial", "restructure")
 
@@ -369,6 +370,8 @@ def heading_level(paragraph, mode: str) -> int | None:
         return None
     if paragraph_style_name(paragraph) in {"AOW List", "AOW Quote", "AOW Code", "Title"}:
         return None
+    if mode == "patent" and re.match(r"^\d+[、.]\s*(?:一种|根据权利要求|如权利要求)", paragraph.text.strip()):
+        return None
     # An explicit body outline level takes precedence over numbering-shaped text.
     # Markdown lists and code are body content even if they begin with "1.1".
     outline = paragraph._element.xpath("./w:pPr/w:outlineLvl/@w:val")
@@ -430,6 +433,12 @@ def paragraph_format_issues(paragraph, expected: dict[str, Any]) -> list[str]:
         issues.append(f"first-line indent is {indent:g} pt")
     if "first_indent" in expected and not approx(indent, expected["first_indent"], 0.2):
         issues.append(f"first-line indent is {indent!r} pt instead of {expected['first_indent']} pt")
+    if expected.get("hanging_indent") and not (indent is not None and indent < 0):
+        issues.append(f"first-line indent is {indent!r} pt instead of a hanging indent")
+    if expected.get("hanging_left"):
+        left = value_pt(effective_paragraph_value(paragraph, "left_indent"))
+        if left is None or left <= 0:
+            issues.append(f"left indent is {left!r} pt instead of a positive hanging-indent offset")
     line = paragraph_line_multiple(paragraph)
     if "line" in expected and not approx(line, expected["line"], 0.03):
         issues.append(f"line spacing is {line!r} instead of {expected['line']}")
@@ -531,7 +540,7 @@ def check_sections(doc, mode: str) -> list[str]:
         landscape = width > height
         if mode in {"requirements-list", "decision-proposal"} and landscape:
             issues.append(f"section {index} is landscape but this mode requires portrait")
-        if landscape and mode in {"rd-application", "rd-implementation-outline"}:
+        if landscape and mode in {"rd-application", "rd-implementation-outline", "patent"}:
             expected = (1.25, 1.25, 1.0, 1.0)
         else:
             expected = (1.0, 1.0, 1.25, 1.25)
@@ -971,7 +980,17 @@ def check_body_paragraphs(doc, mode: str, allow_colored_text: bool) -> list[str]
         else:
             expected = {"font": "fangsong", "size": 14.0, "first_indent": 28.0, "line": 1.5, "allow_colored": allow_colored_text}
         style_name = paragraph_style_name(paragraph)
-        if style_name in {"AOW List", "AOW Quote"}:
+        patent_claim = mode == "patent" and (
+            re.match(r"^\d+[、.]\s*(?:一种|根据权利要求|如权利要求)", text)
+            or (
+                style_name == "AOW List"
+                and re.match(r"^(?:一种|根据权利要求|如权利要求)", text)
+            )
+        )
+        if patent_claim:
+            expected.pop("first_indent", None)
+            expected.update(hanging_indent=True, hanging_left=True)
+        elif style_name in {"AOW List", "AOW Quote"}:
             expected["first_indent"] = -12.0 if style_name == "AOW List" else 0.0
         elif style_name == "AOW Code":
             expected.update(font="song", size=12.0, first_indent=0.0, line=1.0)

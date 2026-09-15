@@ -6,6 +6,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
 from markdown_to_docx import convert, Document, qn
 from validate_standardized_docx import heading_level, check_cover_and_title, check_body_paragraphs, check_toc
 from docx.shared import Pt

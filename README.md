@@ -156,7 +156,14 @@ python scripts/ensure_toc.py draft.docx --out draft-with-toc.docx
 
 ### 处理模式
 
-支持 `requirements-list`、`decision-proposal`、`rd-application` 和 `rd-implementation-outline` 四种文档模式。默认采用 `editorial` 保留式改写，保留源文档的事实和语义单元。
+支持 `requirements-list`、`decision-proposal`、`rd-application`、`rd-implementation-outline` 和 `patent` 五种文档模式。默认采用 `editorial` 保留式改写，保留源文档的事实和语义单元。
+
+专利交底书和权利要求书使用 `--mode patent`；参考文献整理按 GB/T 7714—2015 常见顺序编码制执行：
+
+```powershell
+python scripts/format_references.py .\references.json --out .\references.md
+python scripts/batch_convert.py .\drafts --out-dir .\build --mode patent --report-dir .\build\reports
+```
 
 ### 内容与格式验收
 
@@ -202,9 +209,9 @@ python scripts/validate_standardized_docx.py output.docx `
 - [x] AI 模板化表达的保留式改写规则
 - [x] 多级标题规范化与目录生成
 - [x] DOCX 表格、字体、分页和黑白版式验收
-- [ ] GB/T 7714 参考文献格式审计
-- [ ] 专利交底书和权利要求书的专用语态适配
-- [ ] 无需进入对话界面的离线批量转换 CLI
+- [x] GB/T 7714 参考文献格式审计
+- [x] 专利交底书和权利要求书的专用格式适配
+- [x] 无需进入对话界面的离线批量转换 CLI
 
 <a id="community"></a>
 

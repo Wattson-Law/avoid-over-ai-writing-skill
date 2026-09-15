@@ -49,6 +49,9 @@ Markdown 文件或粘贴输入必须完整读取 [markdown-input.md](references/
 | 决策方案 | 背景/痛点、方案或产品对比、推荐结论、实施建议 | [mode-decision-proposal.md](references/mode-decision-proposal.md) |
 | 立项申请书 | 立项背景、研究现状、目标、研究内容、研究方法、考核指标、审核意见 | [mode-rd-application.md](references/mode-rd-application.md) |
 | 实施大纲 | 研究意义、可行性、实施方案、技术路线、考核、计划、分工、预算 | [mode-rd-implementation-outline.md](references/mode-rd-implementation-outline.md) |
+| 专利交底书/权利要求书 | 技术领域、背景技术、发明内容、实施方式、权利要求或摘要 | [mode-patent.md](references/mode-patent.md) |
+
+当用户要求整理参考文献或 GB/T 7714 格式时，读取 [gb-t-7714.md](references/gb-t-7714.md)；需要离线批量处理结构化记录时使用 `scripts/format_references.py`。
 
 立项申请书和实施大纲是不同阶段的文书，不能互相套目录。输入已有固定表单或章节时，以输入结构为先，只在用户明确要求 `restructure` 时调整一级章节。
 
@@ -94,7 +97,7 @@ Markdown 文件或粘贴输入必须完整读取 [markdown-input.md](references/
      --report "$QA_DIR\format-validation.json"
    ```
 
-   `$MODE` 只能是 `requirements-list`、`decision-proposal`、`rd-application` 或 `rd-implementation-outline`。验收器非零退出或报告存在失败项时禁止交付，必须修复后重跑。参考文档只提供结构和版式规则，不把任何项目文本复制到输出。
+   `$MODE` 只能是 `requirements-list`、`decision-proposal`、`rd-application`、`rd-implementation-outline` 或 `patent`。验收器非零退出或报告存在失败项时禁止交付，必须修复后重跑。参考文档只提供结构和版式规则，不把任何项目文本复制到输出。
    只有用户在当前任务中明确要求保留彩色正文时，才可追加 `--allow-colored-text`；该选项不豁免表格的白底黑字规则，也不能仅因输入文件原来带颜色而使用。
    用户明确要求在默认不生成目录的模式中新增目录时，追加 `--require-toc`。无真实标题的输入不补造章节，保持正文结构，不制造空目录；不存在的封面标题、单位和日期也不补写。
 8. 完成全部文字和分页调整后更新目录、页码及交叉引用字段。Windows 已安装 Word 时运行：
